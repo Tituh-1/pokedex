@@ -22,7 +22,52 @@ function App() {
 useEffect(() => {
 
 const getData = async () => {
+  if (count === 0) {
+  setPoke({
+    id: 0,
+    name: "MissingNo",
+    forms: [
+      {
+        name: "missingno"
+      }
+    ],
+    sprites: {
+      front_default: "/MissingNo-ghost.png",
+      back_default: "/MissingNo-ghost.png",
+      front_shiny: "/MissingNoYellow.png",
+      back_shiny: "/MissingNoYellow.png",
+      other: {
+        "official-artwork": {
+          front_default: "/MissingNo.png",
+          front_shiny: "/MissingNoYellow.png"
+        },
+        home: {
+          front_default: "/MissingNo-kabutops.png",
+          front_shiny: "/MissingNoYellow.png"
+        },
+        showdown: {
+          front_default: "/missingno-aerodactyl.png",
+          front_shiny: "/MissingNoYellow.png",
+          back_default: "/missingno-aerodactyl.png",
+          back_shiny: "/MissingNoYellow.png"
+        }
+      }
+    },
+    types: [
+      {
+        type: {
+          name: "???"
+        }
+      }
+    ],
+    stats: []
+  });
 
+  setLoading(false);
+  setError(false);
+  return;
+
+ }
 try {
 
 const res = await axios.get( "https://pokeapi.co/api/v2/pokemon/" + (count));
@@ -237,7 +282,7 @@ if(error){
     type="button"
     className="counter"
     onClick={() => {
-      if (count > 1) {
+      if (count > 0 && count <= 1025 || (count > 10001 && count <= 10326)) {
         setCount(count - 1)
       }
     }}
@@ -275,7 +320,7 @@ if(error){
         } catch (e) {
 
           console.error("Pokémon não encontrado", e);
-          setError(true);
+          alert("Pokémon não encontrado!");
 
         }
 
@@ -290,7 +335,7 @@ if(error){
     type="button"
     className="counter"
     onClick={() => {
-      if (count < 1025) {
+       if (count >= 0 && count < 1025 || (count >= 10001 && count < 10326)) {
         setCount(count + 1)
       }
     }}
@@ -298,6 +343,16 @@ if(error){
     Próximo 🢂
   </button>
 
+<button
+    type="button"
+    className="counter"
+    onClick={() => {
+        setCount(count >= 10001 ? 1 : 10001)
+    }}
+  >
+    {count >= 10001 ? "Padrão" : "Extras!"}
+
+  </button>
 </div>
 
       </section>
